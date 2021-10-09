@@ -1,16 +1,23 @@
 import sys
-
+import numpy as np
+import pandas as pd
+import sqlite3
 
 def load_data(messages_filepath, categories_filepath):
-    pass
+    df_mes = pd.read_csv(messages_filepath)
+    df_cat = pd.read_csv(categories_filepath)
+    df = df_mes.merge(df_cat, on='id', how='inner')
+    return df
 
 
 def clean_data(df):
-    pass
+    df_drop=df.drop_duplicates(subset=['id'])
+    return df_drop
 
 
 def save_data(df, database_filename):
-    pass  
+    conn = sqlite3.connect(database_filename)
+    df.to_sql('message', con=conn)
 
 
 def main():
