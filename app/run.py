@@ -9,6 +9,7 @@ from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
 from sklearn.externals import joblib
+from sklearn.externals import pickle
 from sqlalchemy import create_engine
 
 
@@ -30,8 +31,8 @@ engine = create_engine('sqlite:///../data/DisasterResponse.db')
 df = pd.read_sql_table('message', engine)
 
 # load model
-model = joblib.load("../models/classifier.pkl")
-
+#model = joblib.load("../models/classifier.pkl")
+model = pickle.load(open("../models/classifier.pkl", 'rb'))
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
